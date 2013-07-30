@@ -1,9 +1,10 @@
-package main
+// https://status.github.com/api
+
+package ghstatus
 
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -63,28 +64,4 @@ func GetLastMessage() (*Message, error) {
 		return nil, err
 	}
 	return message, nil
-}
-
-func main() {
-	log.SetFlags(0)
-
-	status, err := GetStatus()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("%+v", status)
-
-	messages, err := GetMessages()
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, m := range messages {
-		log.Printf("%+v", m)
-	}
-
-	message, err := GetLastMessage()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("%+v", message)
 }
