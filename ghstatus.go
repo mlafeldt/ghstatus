@@ -39,7 +39,7 @@ func sendRequest(endpoint string, v interface{}) error {
 		return err
 	}
 
-	return json.Unmarshal(body, &v)
+	return json.Unmarshal(body, v)
 }
 
 // Get current system status (one of good, minor, or major) and timestamp.
