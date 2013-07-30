@@ -21,13 +21,13 @@ Usage
 import "github.com/mlafeldt/go-ghstatus"
 
 // Get current system status (one of good, minor, or major) and timestamp.
-status, err := GetStatus()
+status, err := ghstatus.GetStatus()
 
 // Get most recent human communications with status and timestamp.
-messages, err := GetMessages()
+messages, err := ghstatus.GetMessages()
 
 // Get last human communication, status, and timestamp.
-message, err := GetLastMessage()
+message, err := ghstatus.GetLastMessage()
 ```
 
 
