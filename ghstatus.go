@@ -2,7 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"log"
+	"net/http"
 )
 
 type Message struct {
@@ -29,12 +31,20 @@ var data = []byte(`
 func main() {
 	log.SetFlags(0)
 
-	var m []Message
-	err := json.Unmarshal(data, &m)
+	resp, err := http.Get("https://status.github.com/api/messages.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+
+	var messages []Message
+	err = json.Unmarshal(body, &messages)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Printf("%d", len(m))
-	log.Printf("%v", m)
+	for _, m := range messages {
+		log.Printf("%v", m)
+	}
 }
