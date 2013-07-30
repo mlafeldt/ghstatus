@@ -7,6 +7,12 @@ import (
 	"net/http"
 )
 
+const (
+	StatusGood  = "good"
+	StatusMinor = "minor"
+	StatusMajor = "major"
+)
+
 type Status struct {
 	Status      string `json:"status"`
 	LastUpdated string `json:"last_updated"`
