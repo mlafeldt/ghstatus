@@ -8,35 +8,27 @@ import (
 )
 
 type Message struct {
-	Status      string
-	Body        string
-	CreatedOn   string
+	Status    string
+	Body      string
+	CreatedOn string
 }
 
-var data = []byte(`
-[
-    {
-        "body": "Everything operating normally.",
-        "created_on": "2013-07-29T22:23:19Z",
-        "status": "good"
-    },
-    {
-        "body": "We are continuing to work on the increased exception rate on the GitHub API. We will update again as soon as have the source of these exceptions resolved. ",
-        "created_on": "2013-07-29T21:09:54Z",
-        "status": "minor"
-    }
-]
-`)
+func sendRequest(endpoint string) ([]byte, error) {
+	resp, err := http.Get("https://status.github.com/api/" + endpoint + ".json")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	return ioutil.ReadAll(resp.Body)
+}
 
 func main() {
 	log.SetFlags(0)
 
-	resp, err := http.Get("https://status.github.com/api/messages.json")
+	body, err := sendRequest("messages")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
 
 	var messages []Message
 	err = json.Unmarshal(body, &messages)
