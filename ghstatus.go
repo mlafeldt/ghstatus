@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+const StatusApiUrl = "https://status.github.com/api"
+
 const (
 	StatusGood  = "good"
 	StatusMinor = "minor"
@@ -24,52 +26,40 @@ type Message struct {
 	CreatedOn string `json:"created_on"`
 }
 
-func sendRequest(endpoint string) ([]byte, error) {
-	resp, err := http.Get("https://status.github.com/api/" + endpoint + ".json")
+func sendRequest(endpoint string, v interface{}) error {
+	resp, err := http.Get(StatusApiUrl + endpoint + ".json")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer resp.Body.Close()
-	return ioutil.ReadAll(resp.Body)
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(body, &v)
 }
 
 func GetStatus() (*Status, error) {
-	body, err := sendRequest("status")
-	if err != nil {
-		return nil, err
-	}
-
 	var status *Status
-	err = json.Unmarshal(body, &status)
-	if err != nil {
+	if err := sendRequest("/status", &status); err != nil {
 		return nil, err
 	}
 	return status, nil
 }
 
 func GetMessages() ([]Message, error) {
-	body, err := sendRequest("messages")
-	if err != nil {
-		return nil, err
-	}
-
 	var messages []Message
-	err = json.Unmarshal(body, &messages)
-	if err != nil {
+	if err := sendRequest("/messages", &messages); err != nil {
 		return nil, err
 	}
 	return messages, nil
 }
 
 func GetLastMessage() (*Message, error) {
-	body, err := sendRequest("last-message")
-	if err != nil {
-		return nil, err
-	}
-
 	var message *Message
-	err = json.Unmarshal(body, &message)
-	if err != nil {
+	if err := sendRequest("/last-message", &message); err != nil {
 		return nil, err
 	}
 	return message, nil
