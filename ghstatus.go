@@ -8,9 +8,9 @@ import (
 )
 
 type Message struct {
-	Status    string
-	Body      string
-	CreatedOn string
+	Status    string `json:"status"`
+	Body      string `json:"body"`
+	CreatedOn string `json:"created_on"`
 }
 
 func sendRequest(endpoint string) ([]byte, error) {
@@ -37,6 +37,6 @@ func main() {
 	}
 
 	for _, m := range messages {
-		log.Printf("%v", m)
+		log.Printf("%+v", m)
 	}
 }
