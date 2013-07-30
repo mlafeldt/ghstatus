@@ -42,6 +42,7 @@ func sendRequest(endpoint string, v interface{}) error {
 	return json.Unmarshal(body, &v)
 }
 
+// Get current system status (one of good, minor, or major) and timestamp.
 func GetStatus() (*Status, error) {
 	var status *Status
 	if err := sendRequest("/status", &status); err != nil {
@@ -50,6 +51,7 @@ func GetStatus() (*Status, error) {
 	return status, nil
 }
 
+// Get most recent human communications with status and timestamp.
 func GetMessages() ([]Message, error) {
 	var messages []Message
 	if err := sendRequest("/messages", &messages); err != nil {
@@ -58,6 +60,7 @@ func GetMessages() ([]Message, error) {
 	return messages, nil
 }
 
+// Get last human communication, status, and timestamp.
 func GetLastMessage() (*Message, error) {
 	var message *Message
 	if err := sendRequest("/last-message", &message); err != nil {
