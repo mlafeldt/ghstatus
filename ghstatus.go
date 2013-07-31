@@ -11,7 +11,7 @@ import (
 )
 
 // The root URL of GitHub's system status API.
-const StatusApiUrl = "https://status.github.com/api"
+const StatusApiUrl = "https://status.github.com"
 
 // Possible status values.
 const (
@@ -20,13 +20,14 @@ const (
 	StatusMajor = "major"
 )
 
-// Current system status as returned by the /status endpoint.
+// Current system status as returned by the /api/status.json endpoint.
 type Status struct {
 	Status      string `json:"status"`
 	LastUpdated string `json:"last_updated"`
 }
 
-// A status message as returned by the /messages and /last-message endpoints.
+// A status message as returned by the /api/messages.json and
+// /api/last-message.json endpoints.
 type Message struct {
 	Status    string `json:"status"`
 	Body      string `json:"body"`
@@ -34,7 +35,7 @@ type Message struct {
 }
 
 func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(StatusApiUrl + endpoint + ".json")
+	resp, err := http.Get(StatusApiUrl + endpoint)
 	if err != nil {
 		return err
 	}
@@ -51,7 +52,7 @@ func sendRequest(endpoint string, v interface{}) error {
 // Get current system status and timestamp.
 func GetStatus() (*Status, error) {
 	var status *Status
-	if err := sendRequest("/status", &status); err != nil {
+	if err := sendRequest("/api/status.json", &status); err != nil {
 		return nil, err
 	}
 	return status, nil
@@ -60,7 +61,7 @@ func GetStatus() (*Status, error) {
 // Get most recent human communications with status and timestamp.
 func GetMessages() ([]Message, error) {
 	var messages []Message
-	if err := sendRequest("/messages", &messages); err != nil {
+	if err := sendRequest("/api/messages.json", &messages); err != nil {
 		return nil, err
 	}
 	return messages, nil
@@ -69,7 +70,7 @@ func GetMessages() ([]Message, error) {
 // Get last human communication, status, and timestamp.
 func GetLastMessage() (*Message, error) {
 	var message *Message
-	if err := sendRequest("/last-message", &message); err != nil {
+	if err := sendRequest("/api/last-message.json", &message); err != nil {
 		return nil, err
 	}
 	return message, nil
