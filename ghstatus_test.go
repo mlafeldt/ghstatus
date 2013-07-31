@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -51,7 +52,12 @@ var fakeResponses = []struct {
 	},
 }
 
+// Start internal webserver returning fake responses (unless REALHTTP is set in
+// environment).
 func init() {
+	if os.Getenv("REALHTTP") != "" {
+		return
+	}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, f := range fakeResponses {
 			if r.Method == f.method && r.URL.Path == f.endpoint {
