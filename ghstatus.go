@@ -1,4 +1,6 @@
-// https://status.github.com/api
+// The ghstatus package allows you to check the system status of GitHub from
+// your own applications. The status information is retrieved from GitHub's
+// system status API (https://status.github.com/api).
 
 package ghstatus
 
@@ -8,19 +10,23 @@ import (
 	"net/http"
 )
 
+// The root URL of GitHub's system status API.
 const StatusApiUrl = "https://status.github.com/api"
 
+// Possible status values.
 const (
 	StatusGood  = "good"
 	StatusMinor = "minor"
 	StatusMajor = "major"
 )
 
+// Current system status as returned by the /status endpoint.
 type Status struct {
 	Status      string `json:"status"`
 	LastUpdated string `json:"last_updated"`
 }
 
+// A status message as returned by the /messages and /last-message endpoints.
 type Message struct {
 	Status    string `json:"status"`
 	Body      string `json:"body"`
@@ -42,7 +48,7 @@ func sendRequest(endpoint string, v interface{}) error {
 	return json.Unmarshal(body, v)
 }
 
-// Get current system status (one of good, minor, or major) and timestamp.
+// Get current system status and timestamp.
 func GetStatus() (*Status, error) {
 	var status *Status
 	if err := sendRequest("/status", &status); err != nil {

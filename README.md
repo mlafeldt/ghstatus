@@ -1,7 +1,9 @@
 go-ghstatus
 ===========
 
-A Go library for GitHub's [System Status API].
+This Go library allows you to check the system status of GitHub from your own
+applications. The status information is retrieved from GitHub's [system status
+API].
 
 
 Installation
@@ -17,18 +19,7 @@ To download and install go-ghstatus from source, simply run:
 Usage
 -----
 
-```go
-import "github.com/mlafeldt/go-ghstatus"
-
-// Get current system status (one of good, minor, or major) and timestamp.
-status, err := ghstatus.GetStatus()
-
-// Get most recent human communications with status and timestamp.
-messages, err := ghstatus.GetMessages()
-
-// Get last human communication, status, and timestamp.
-message, err := ghstatus.GetLastMessage()
-```
+For usage and examples see the [Godoc] for this package.
 
 
 License
@@ -56,5 +47,6 @@ Contact
 
 
 [Go 1]: http://golang.org/doc/install
+[Godoc]: http://godoc.org/github.com/mlafeldt/go-ghstatus
 [LICENSE]: https://github.com/mlafeldt/go-ghstatus/blob/master/LICENSE
-[System Status API]: https://status.github.com/api
+[system status API]: https://status.github.com/api
