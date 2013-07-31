@@ -11,7 +11,7 @@ import (
 )
 
 // The root URL of GitHub's system status API.
-const StatusApiUrl = "https://status.github.com"
+var StatusApiUrl = "https://status.github.com"
 
 // Possible status values.
 const (
