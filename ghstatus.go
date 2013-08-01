@@ -12,7 +12,7 @@ import (
 )
 
 // The root URL of GitHub's system status API.
-var StatusApiUrl = "https://status.github.com"
+var ServiceURL = "https://status.github.com"
 
 // Possible status values.
 const (
@@ -36,7 +36,7 @@ type Message struct {
 }
 
 func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(StatusApiUrl + endpoint)
+	resp, err := http.Get(ServiceURL + endpoint)
 	if err != nil {
 		return err
 	}

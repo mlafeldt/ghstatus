@@ -54,7 +54,7 @@ func init() {
 			http.Error(w, "", http.StatusNotFound)
 		}
 	}))
-	StatusApiUrl = ts.URL
+	ServiceURL = ts.URL
 }
 
 func TestGetStatus(t *testing.T) {
