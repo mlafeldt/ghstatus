@@ -57,12 +57,26 @@ func init() {
 	ServiceURL = ts.URL
 }
 
+func checkStatus(s string) bool {
+	switch s {
+	case StatusGood, StatusMinor, StatusMajor:
+		return true
+	}
+	return false
+}
+
 func TestGetStatus(t *testing.T) {
 	status, err := GetStatus()
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Logf("%+v", status)
+	if !checkStatus(status.Status) {
+		t.Errorf("Invalid Status: %s", status.Status)
+	}
+	if status.LastUpdated == "" {
+		t.Error("LastUpdated empty")
+	}
 }
 
 func TestGetMessages(t *testing.T) {
@@ -72,6 +86,15 @@ func TestGetMessages(t *testing.T) {
 	}
 	for _, m := range messages {
 		t.Logf("%+v", m)
+		if !checkStatus(m.Status) {
+			t.Errorf("Invalid Status: %s", m.Status)
+		}
+		if m.Body == "" {
+			t.Error("Body empty")
+		}
+		if m.CreatedOn == "" {
+			t.Error("CreatedOn empty")
+		}
 	}
 }
 
@@ -81,4 +104,13 @@ func TestGetLastMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("%+v", message)
+	if !checkStatus(message.Status) {
+		t.Errorf("Invalid Status: %s", message.Status)
+	}
+	if message.Body == "" {
+		t.Error("Body empty")
+	}
+	if message.CreatedOn == "" {
+		t.Error("CreatedOn empty")
+	}
 }
