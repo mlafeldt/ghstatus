@@ -35,25 +35,6 @@ type Message struct {
 	CreatedOn string `json:"created_on"`
 }
 
-func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(ServiceURL + endpoint)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("HTTP error: %s", resp.Status)
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, v)
-}
-
 // Get current system status and timestamp.
 func GetStatus() (*Status, error) {
 	var status *Status
@@ -79,4 +60,23 @@ func GetLastMessage() (*Message, error) {
 		return nil, err
 	}
 	return message, nil
+}
+
+func sendRequest(endpoint string, v interface{}) error {
+	resp, err := http.Get(ServiceURL + endpoint)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("HTTP error: %s", resp.Status)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(body, v)
 }
