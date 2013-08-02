@@ -1,5 +1,5 @@
-// These tests for the ghstatus package start an internal webserver that
-// returns fake responses. To talk to the real API, set the environment
+// These tests for the ghstatus package start an internal web server that
+// returns fake responses. To talk to the real service, set the environment
 // variable REALHTTP.
 
 package ghstatus

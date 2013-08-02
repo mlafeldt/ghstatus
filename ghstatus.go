@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-// The root URL of GitHub's system status API.
+// The URL of GitHub's system status API.
 var ServiceURL = "https://status.github.com"
 
 // Possible status values.
@@ -21,14 +21,13 @@ const (
 	StatusMajor = "major"
 )
 
-// Current system status as returned by the /api/status.json endpoint.
+// Current system status as returned by GetStatus.
 type Status struct {
 	Status      string `json:"status"`
 	LastUpdated string `json:"last_updated"`
 }
 
-// A status message as returned by the /api/messages.json and
-// /api/last-message.json endpoints.
+// A status message as returned by GetMessages and GetLastMessage.
 type Message struct {
 	Status    string `json:"status"`
 	Body      string `json:"body"`
