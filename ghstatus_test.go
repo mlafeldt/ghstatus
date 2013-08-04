@@ -84,6 +84,9 @@ func TestGetMessages(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if len(messages) == 0 {
+		t.Error("No messages returned")
+	}
 	for _, m := range messages {
 		t.Logf("%+v", m)
 		if !checkStatus(m.Status) {
