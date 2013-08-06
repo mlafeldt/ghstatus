@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 // The URL of GitHub's system status API.
@@ -23,15 +24,15 @@ const (
 
 // Current system status as returned by GetStatus.
 type Status struct {
-	Status      string `json:"status"`
-	LastUpdated string `json:"last_updated"`
+	Status      string    `json:"status"`
+	LastUpdated time.Time `json:"last_updated"`
 }
 
 // A status message as returned by GetMessages and GetLastMessage.
 type Message struct {
-	Status    string `json:"status"`
-	Body      string `json:"body"`
-	CreatedOn string `json:"created_on"`
+	Status    string    `json:"status"`
+	Body      string    `json:"body"`
+	CreatedOn time.Time `json:"created_on"`
 }
 
 // Get current system status and timestamp.

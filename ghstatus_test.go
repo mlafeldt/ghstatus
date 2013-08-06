@@ -74,8 +74,8 @@ func TestGetStatus(t *testing.T) {
 	if !checkStatus(status.Status) {
 		t.Errorf("Invalid Status: %s", status.Status)
 	}
-	if status.LastUpdated == "" {
-		t.Error("LastUpdated empty")
+	if status.LastUpdated.IsZero() {
+		t.Error("LastUpdated is zero")
 	}
 }
 
@@ -95,8 +95,8 @@ func TestGetMessages(t *testing.T) {
 		if m.Body == "" {
 			t.Error("Body empty")
 		}
-		if m.CreatedOn == "" {
-			t.Error("CreatedOn empty")
+		if m.CreatedOn.IsZero() {
+			t.Error("CreatedOn is zero")
 		}
 	}
 }
@@ -113,7 +113,7 @@ func TestGetLastMessage(t *testing.T) {
 	if message.Body == "" {
 		t.Error("Body empty")
 	}
-	if message.CreatedOn == "" {
-		t.Error("CreatedOn empty")
+	if message.CreatedOn.IsZero() {
+		t.Error("CreatedOn is zero")
 	}
 }
