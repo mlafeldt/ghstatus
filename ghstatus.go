@@ -15,7 +15,7 @@ import (
 // The URL of GitHub's system status API.
 var serviceURL = "https://status.github.com"
 
-// Possible status values.
+// Possible status values set in Status and Message.
 const (
 	StatusGood  = "good"
 	StatusMinor = "minor"
