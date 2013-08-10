@@ -1,7 +1,6 @@
 // The ghstatus package allows you to check the system status of GitHub from
 // your own applications. The status information is retrieved from GitHub's
 // system status API (https://status.github.com/api).
-
 package ghstatus
 
 import (
