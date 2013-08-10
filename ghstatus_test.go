@@ -58,7 +58,7 @@ func init() {
 
 func checkStatus(s string) bool {
 	switch s {
-	case StatusGood, StatusMinor, StatusMajor:
+	case Good, Minor, Major:
 		return true
 	}
 	return false

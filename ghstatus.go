@@ -16,9 +16,9 @@ var serviceURL = "https://status.github.com"
 
 // Possible status values set in Status and Message.
 const (
-	StatusGood  = "good"
-	StatusMinor = "minor"
-	StatusMajor = "major"
+	Good  = "good"
+	Minor = "minor"
+	Major = "major"
 )
 
 // Current system status as returned by GetStatus.
