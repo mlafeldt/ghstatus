@@ -13,7 +13,7 @@ import (
 )
 
 // The URL of GitHub's system status API.
-var ServiceURL = "https://status.github.com"
+var serviceURL = "https://status.github.com"
 
 // Possible status values.
 const (
@@ -33,6 +33,16 @@ type Message struct {
 	Status    string    `json:"status"`
 	Body      string    `json:"body"`
 	CreatedOn time.Time `json:"created_on"`
+}
+
+// Get current URL for system status API.
+func ServiceURL() string {
+	return serviceURL
+}
+
+// Set new URL for system status API.
+func SetServiceURL(url string) {
+	serviceURL = url
 }
 
 // Get current system status and timestamp.
@@ -63,7 +73,7 @@ func GetLastMessage() (*Message, error) {
 }
 
 func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(ServiceURL + endpoint)
+	resp, err := http.Get(serviceURL + endpoint)
 	if err != nil {
 		return err
 	}

@@ -54,7 +54,7 @@ func init() {
 			http.Error(w, "", http.StatusNotFound)
 		}
 	}))
-	ServiceURL = ts.URL
+	SetServiceURL(ts.URL)
 }
 
 func checkStatus(s string) bool {
