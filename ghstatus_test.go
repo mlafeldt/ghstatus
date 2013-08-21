@@ -42,18 +42,19 @@ var testResponses = map[string]string{
 		}]`,
 }
 
-func init() {
-	if os.Getenv("REALHTTP") != "" {
-		return
+func serveTestResponses(w http.ResponseWriter, r *http.Request) {
+	if body := testResponses[r.Method+" "+r.URL.Path]; body != "" {
+		fmt.Fprint(w, body)
+	} else {
+		http.Error(w, "", http.StatusNotFound)
 	}
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if body := testResponses[r.Method+" "+r.URL.Path]; body != "" {
-			fmt.Fprint(w, body)
-		} else {
-			http.Error(w, "", http.StatusNotFound)
-		}
-	}))
-	SetServiceURL(ts.URL)
+}
+
+func init() {
+	if os.Getenv("REALHTTP") == "" {
+		ts := httptest.NewServer(http.HandlerFunc(serveTestResponses))
+		SetServiceURL(ts.URL)
+	}
 }
 
 func checkStatus(s string) bool {
