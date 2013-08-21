@@ -1,3 +1,9 @@
+v1.3 (Aug 21 2013)
+------------------
+
+* Remove superfluous "Status" prefix from status names (API-breaking change).
+* Add `serveTestResponses` to make test code more readable.
+
 v1.2 (Aug 10 2013)
 ------------------
 
