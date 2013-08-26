@@ -22,6 +22,19 @@ Usage
 For usage and examples see the [Godoc] for this package.
 
 
+Testing
+-------
+
+The tests require [testify] to be installed, so get it first:
+
+    $ go get github.com/stretchr/testify
+
+Now you can run the tests as usual:
+
+    $ cd go-ghstatus/
+    $ go test ./...
+
+
 License
 -------
 
@@ -50,3 +63,4 @@ Contact
 [Godoc]: http://godoc.org/github.com/mlafeldt/go-ghstatus
 [LICENSE]: https://github.com/mlafeldt/go-ghstatus/blob/master/LICENSE
 [system status API]: https://status.github.com/api
+[testify]: https://github.com/stretchr/testify
