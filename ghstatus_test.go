@@ -6,8 +6,10 @@ package ghstatus
 import (
 	"fmt"
 	"net/http"
-	"net/http/httptest"
 	"os"
+
+	"github.com/stretchr/testify/assert"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -67,53 +69,29 @@ func checkStatus(s string) bool {
 
 func TestGetStatus(t *testing.T) {
 	status, err := GetStatus()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("%+v", status)
-	if !checkStatus(status.Status) {
-		t.Errorf("Invalid Status: %s", status.Status)
-	}
-	if status.LastUpdated.IsZero() {
-		t.Error("LastUpdated is zero")
+	if assert.NoError(t, err) {
+		assert.True(t, checkStatus(status.Status))
+		assert.False(t, status.LastUpdated.IsZero())
 	}
 }
 
 func TestGetMessages(t *testing.T) {
 	messages, err := GetMessages()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(messages) == 0 {
-		t.Error("No messages returned")
-	}
-	for _, m := range messages {
-		t.Logf("%+v", m)
-		if !checkStatus(m.Status) {
-			t.Errorf("Invalid Status: %s", m.Status)
-		}
-		if m.Body == "" {
-			t.Error("Body empty")
-		}
-		if m.CreatedOn.IsZero() {
-			t.Error("CreatedOn is zero")
+	if assert.NoError(t, err) {
+		assert.NotEmpty(t, messages)
+		for _, m := range messages {
+			assert.True(t, checkStatus(m.Status))
+			assert.NotEmpty(t, m.Body)
+			assert.False(t, m.CreatedOn.IsZero())
 		}
 	}
 }
 
 func TestGetLastMessage(t *testing.T) {
-	message, err := GetLastMessage()
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("%+v", message)
-	if !checkStatus(message.Status) {
-		t.Errorf("Invalid Status: %s", message.Status)
-	}
-	if message.Body == "" {
-		t.Error("Body empty")
-	}
-	if message.CreatedOn.IsZero() {
-		t.Error("CreatedOn is zero")
+	m, err := GetLastMessage()
+	if assert.NoError(t, err) {
+		assert.True(t, checkStatus(m.Status))
+		assert.NotEmpty(t, m.Body)
+		assert.False(t, m.CreatedOn.IsZero())
 	}
 }
