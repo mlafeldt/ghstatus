@@ -1,3 +1,9 @@
+v1.4 (Aug 26 2013)
+------------------
+
+* Use testify asserts in tests. Add "Testing" section to README.
+* Makefile: make -x optional to reduce verbosity
+
 v1.3 (Aug 21 2013)
 ------------------
 
