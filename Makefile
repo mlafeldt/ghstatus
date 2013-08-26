@@ -12,6 +12,7 @@ install: get
 	$(GO) install -x ./...
 
 test_dep: get
+	$(GO) get -x github.com/stretchr/testify
 	$(GO) test -i -x ./...
 
 test: test_dep
