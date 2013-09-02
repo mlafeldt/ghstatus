@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
@@ -94,4 +95,10 @@ func TestGetLastMessage(t *testing.T) {
 		assert.NotEmpty(t, m.Body)
 		assert.False(t, m.CreatedOn.IsZero())
 	}
+}
+
+func TestSetConnectionTimeout(t *testing.T) {
+	timeout := 10 * time.Minute
+	SetConnectionTimeout(timeout)
+	assert.Equal(t, ConnectionTimeout(), timeout)
 }

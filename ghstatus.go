@@ -7,12 +7,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"time"
 )
 
 // The URL of GitHub's system status API.
 var serviceURL = "https://status.github.com"
+
+// The default HTTP connection timeout.
+var connTimeout = 100 * time.Second
+
+// A HTTP client with a connection timeout.
+var httpClient = createClientWithTimeout(connTimeout)
 
 // Possible status values set in Status and Message.
 const (
@@ -44,6 +51,17 @@ func SetServiceURL(url string) {
 	serviceURL = url
 }
 
+// Get current HTTP connection timeout.
+func ConnectionTimeout() time.Duration {
+	return connTimeout
+}
+
+// Set new HTTP connection timeout. Will affect all subsequent connections.
+func SetConnectionTimeout(timeout time.Duration) {
+	connTimeout = timeout
+	httpClient = createClientWithTimeout(timeout)
+}
+
 // Get current system status and timestamp.
 func GetStatus() (*Status, error) {
 	var status *Status
@@ -71,8 +89,17 @@ func GetLastMessage() (*Message, error) {
 	return message, nil
 }
 
+func createClientWithTimeout(timeout time.Duration) *http.Client {
+	dialFunc := func(network, address string) (net.Conn, error) {
+		return net.DialTimeout(network, address, timeout)
+	}
+	return &http.Client{
+		Transport: &http.Transport{Dial: dialFunc},
+	}
+}
+
 func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(serviceURL + endpoint)
+	resp, err := httpClient.Get(serviceURL + endpoint)
 	if err != nil {
 		return err
 	}
