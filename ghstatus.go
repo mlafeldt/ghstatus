@@ -4,22 +4,11 @@
 package ghstatus
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"net"
-	"net/http"
 	"time"
 )
 
 // The URL of GitHub's system status API.
 var serviceURL = "https://status.github.com"
-
-// The default HTTP connection timeout.
-var connTimeout = 100 * time.Second
-
-// A HTTP client with a connection timeout.
-var httpClient = createClientWithTimeout(connTimeout)
 
 // Possible status values set in Status and Message.
 const (
@@ -51,68 +40,29 @@ func SetServiceURL(url string) {
 	serviceURL = url
 }
 
-// Get current HTTP connection timeout.
-func ConnectionTimeout() time.Duration {
-	return connTimeout
-}
-
-// Set new HTTP connection timeout. Will affect all subsequent connections.
-func SetConnectionTimeout(timeout time.Duration) {
-	connTimeout = timeout
-	httpClient = createClientWithTimeout(timeout)
-}
-
 // Get current system status and timestamp.
-func GetStatus() (*Status, error) {
+func (c *Client) GetStatus() (*Status, error) {
 	var status *Status
-	if err := sendRequest("/api/status.json", &status); err != nil {
+	if err := c.sendRequest("/api/status.json", &status); err != nil {
 		return nil, err
 	}
 	return status, nil
 }
 
 // Get most recent human communications with status and timestamp.
-func GetMessages() ([]Message, error) {
+func (c *Client) GetMessages() ([]Message, error) {
 	var messages []Message
-	if err := sendRequest("/api/messages.json", &messages); err != nil {
+	if err := c.sendRequest("/api/messages.json", &messages); err != nil {
 		return nil, err
 	}
 	return messages, nil
 }
 
 // Get last human communication, status, and timestamp.
-func GetLastMessage() (*Message, error) {
+func (c *Client) GetLastMessage() (*Message, error) {
 	var message *Message
-	if err := sendRequest("/api/last-message.json", &message); err != nil {
+	if err := c.sendRequest("/api/last-message.json", &message); err != nil {
 		return nil, err
 	}
 	return message, nil
-}
-
-func createClientWithTimeout(timeout time.Duration) *http.Client {
-	dialFunc := func(network, address string) (net.Conn, error) {
-		return net.DialTimeout(network, address, timeout)
-	}
-	return &http.Client{
-		Transport: &http.Transport{Dial: dialFunc},
-	}
-}
-
-func sendRequest(endpoint string, v interface{}) error {
-	resp, err := httpClient.Get(serviceURL + endpoint)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("HTTP error: %s", resp.Status)
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, v)
 }

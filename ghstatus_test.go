@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
@@ -46,6 +45,7 @@ var testResponses = map[string]string{
 }
 
 func serveTestResponses(w http.ResponseWriter, r *http.Request) {
+	/* time.Sleep(2 * time.Second) */
 	if body := testResponses[r.Method+" "+r.URL.Path]; body != "" {
 		fmt.Fprint(w, body)
 	} else {
@@ -53,7 +53,10 @@ func serveTestResponses(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+var client *Client
+
 func init() {
+	client = NewClient()
 	if os.Getenv("REALHTTP") == "" {
 		ts := httptest.NewServer(http.HandlerFunc(serveTestResponses))
 		SetServiceURL(ts.URL)
@@ -69,7 +72,7 @@ func checkStatus(s string) bool {
 }
 
 func TestGetStatus(t *testing.T) {
-	status, err := GetStatus()
+	status, err := client.GetStatus()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(status.Status))
 		assert.False(t, status.LastUpdated.IsZero())
@@ -77,7 +80,7 @@ func TestGetStatus(t *testing.T) {
 }
 
 func TestGetMessages(t *testing.T) {
-	messages, err := GetMessages()
+	messages, err := client.GetMessages()
 	if assert.NoError(t, err) {
 		assert.NotEmpty(t, messages)
 		for _, m := range messages {
@@ -89,16 +92,10 @@ func TestGetMessages(t *testing.T) {
 }
 
 func TestGetLastMessage(t *testing.T) {
-	m, err := GetLastMessage()
+	m, err := client.GetLastMessage()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(m.Status))
 		assert.NotEmpty(t, m.Body)
 		assert.False(t, m.CreatedOn.IsZero())
 	}
-}
-
-func TestSetConnectionTimeout(t *testing.T) {
-	timeout := 10 * time.Minute
-	SetConnectionTimeout(timeout)
-	assert.Equal(t, ConnectionTimeout(), timeout)
 }
