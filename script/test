@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Test runner
+#
+# For convenience and for use with https://github.com/mlafeldt/vim-test-runner
+#
+
+set -e
+
+go get github.com/stretchr/testify
+go test -i ./...
+go test -v ./...
