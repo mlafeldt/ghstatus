@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# Test runner
+#
+# For convenience and for use with https://github.com/mlafeldt/vim-test-runner
+#
 
 set -e
 
