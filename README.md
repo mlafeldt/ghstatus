@@ -34,6 +34,11 @@ Now you can run the tests as usual:
     $ cd go-ghstatus/
     $ go test ./...
 
+Alternatively, use the `test` script which does all of the steps above:
+
+    $ cd go-ghstatus/
+    $ ./script/test
+
 
 License
 -------

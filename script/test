@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+go get github.com/stretchr/testify
+go test -i ./...
+go test -v ./...
