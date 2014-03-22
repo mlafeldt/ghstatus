@@ -25,16 +25,9 @@ For usage and examples see the [Godoc] for this package.
 Testing
 -------
 
-The tests require [testify] to be installed, so get it first:
+[![Build Status](https://travis-ci.org/mlafeldt/go-ghstatus.svg?branch=master)](https://travis-ci.org/mlafeldt/go-ghstatus)
 
-    $ go get github.com/stretchr/testify
-
-Now you can run the tests as usual:
-
-    $ cd go-ghstatus/
-    $ go test ./...
-
-Alternatively, use the `test` script which does all of the steps above:
+You can run the tests this way:
 
     $ cd go-ghstatus/
     $ ./script/test
