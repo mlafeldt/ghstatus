@@ -2,70 +2,44 @@ go-ghstatus
 ===========
 
 This Go library allows you to check the system status of GitHub from your own
-applications. The status information is retrieved from GitHub's [system status
-API].
+applications.
 
+The status information is retrieved from GitHub's [system status API].
 
-Installation
-------------
+## Installation
 
-First, make sure you have [Go 1] installed.
+First, make sure you have [Go] installed.
 
 To download and install go-ghstatus from source, simply run:
 
     $ go get github.com/mlafeldt/go-ghstatus
 
+## Usage
 
-Usage
------
+For usage and examples, see the [Godoc] for this package.
 
-For usage and examples see the [Godoc] for this package.
+## Testing
 
+[![Build Status](https://travis-ci.org/mlafeldt/go-ghstatus.svg?branch=master)](https://travis-ci.org/mlafeldt/go-ghstatus)
 
-Testing
--------
-
-The tests require [testify] to be installed, so get it first:
-
-    $ go get github.com/stretchr/testify
-
-Now you can run the tests as usual:
-
-    $ cd go-ghstatus/
-    $ go test ./...
-
-Alternatively, use the `test` script which does all of the steps above:
+You can run the tests this way:
 
     $ cd go-ghstatus/
     $ ./script/test
 
+## License and Author
 
-License
--------
+Author:: Mathias Lafeldt (<mathias.lafeldt@gmail.com>)
 
-go-ghstatus is licensed under the terms of the MIT License. See [LICENSE] file.
+Copyright:: 2013-2014, Mathias Lafeldt
 
+go-ghstatus is licensed under the terms of the MIT License. See `LICENSE` file.
 
-Contributing
-------------
+## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Please see `CONTRIBUTING.md` for details.
 
 
-Contact
--------
-
-* Web: <https://github.com/mlafeldt/go-ghstatus>
-* Mail: <mathias.lafeldt@gmail.com>
-* Twitter: [@mlafeldt](https://twitter.com/mlafeldt)
-
-
-[Go 1]: http://golang.org/doc/install
+[Go]: http://golang.org/doc/install
 [Godoc]: http://godoc.org/github.com/mlafeldt/go-ghstatus
-[LICENSE]: https://github.com/mlafeldt/go-ghstatus/blob/master/LICENSE
 [system status API]: https://status.github.com/api
-[testify]: https://github.com/stretchr/testify

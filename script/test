@@ -1,10 +1,8 @@
 #!/bin/sh
-#
-# Test runner - for convenience and for use with vim-test-runner.
-#
 
 set -e
 
-go get github.com/stretchr/testify
-go test -i ./...
+: ${GOTESTFLAGS:="-v -cover"}
+
+script/bootstrap
 go test $GOTESTFLAGS ./...
