@@ -5,6 +5,7 @@ package ghstatus
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -13,50 +14,24 @@ import (
 	"testing"
 )
 
-var testResponses = map[string]string{
-	"GET /api/status.json":       `{"status":"good","last_updated":"2013-07-31T12:09:46Z"}`,
-	"GET /api/last-message.json": `{"status":"good","body":"Everything operating normally.","created_on":"2013-07-29T22:23:19Z"}`,
-	"GET /api/messages.json": `[
-		{
-			"body": "Everything operating normally.",
-			"created_on": "2013-07-29T22:23:19Z",
-			"status": "good"
-		},
-		{
-			"body": "We are continuing to work on the increased exception rate on the GitHub API.",
-			"created_on": "2013-07-29T21:09:54Z",
-			"status": "minor"
-		},
-		{
-			"body": "We've mitigated the DDoS attack and the site should responding normally.",
-			"created_on": "2013-07-29T16:10:54Z",
-			"status": "minor"
-		},
-		{
-			"body": "We're currently experiencing a large DDoS attack.",
-			"created_on": "2013-07-29T15:05:38Z",
-			"status": "major"
-		},
-		{
-			"body": "We're investigating a small increase in exceptions affecting the GitHub API.",
-			"created_on": "2013-07-29T13:29:24Z",
-			"status": "minor"
-		}]`,
-}
-
-func serveTestResponses(w http.ResponseWriter, r *http.Request) {
-	if body := testResponses[r.Method+" "+r.URL.Path]; body != "" {
-		fmt.Fprint(w, body)
-	} else {
-		http.Error(w, "", http.StatusNotFound)
-	}
-}
-
 func init() {
 	if os.Getenv("REALHTTP") == "" {
 		ts := httptest.NewServer(http.HandlerFunc(serveTestResponses))
 		SetServiceURL(ts.URL)
 	}
+}
+
+func serveTestResponses(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, "method must be GET", http.StatusMethodNotAllowed)
+		return
+	}
+	content, err := ioutil.ReadFile("testdata" + r.URL.Path)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprint(w, string(content))
 }
 
 func checkStatus(s string) bool {
