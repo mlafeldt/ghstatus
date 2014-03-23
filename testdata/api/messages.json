@@ -1,0 +1,32 @@
+[
+    {
+        "body": "Everything operating normally.", 
+        "created_on": "2014-03-22T03:35:14Z", 
+        "status": "good"
+    }, 
+    {
+        "body": "As a result of our ongoing DDoS mitigation, we're experiencing high rates of packet loss from users in the Asia-Pacific region. We're working on reducing this disruption to service and will provide additional information when it becomes available.", 
+        "created_on": "2014-03-22T01:04:47Z", 
+        "status": "minor"
+    }, 
+    {
+        "body": "GitHub.com remains stable as we continue to mitigate an ongoing DDoS attack. At this time we're discontinuing status updates, but will resume them if the situation changes.", 
+        "created_on": "2014-03-21T14:11:45Z", 
+        "status": "good"
+    }, 
+    {
+        "body": "GitHub.com performance has been back to normal for some time. We continue to work to tune our mitigation to make sure that there is as little impact to legitimate traffic as possible.", 
+        "created_on": "2014-03-21T13:56:38Z", 
+        "status": "minor"
+    }, 
+    {
+        "body": "We are continuing to work to mitigate the attack and reduce the number of legitimate users who are flagged as attack traffic.", 
+        "created_on": "2014-03-21T13:35:16Z", 
+        "status": "minor"
+    }, 
+    {
+        "body": "We are currently working to mitigate an incoming DDoS attack. We'll provide additional information as it becomes available.", 
+        "created_on": "2014-03-21T13:13:42Z", 
+        "status": "minor"
+    }
+]

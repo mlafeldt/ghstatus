@@ -1,0 +1,6 @@
+{
+    "daily_summary": "https://status.github.com/api/daily-summary.json", 
+    "last_message_url": "https://status.github.com/api/last-message.json", 
+    "messages_url": "https://status.github.com/api/messages.json", 
+    "status_url": "https://status.github.com/api/status.json"
+}
