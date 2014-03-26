@@ -11,7 +11,7 @@ import (
 )
 
 func printStatus(t time.Time, status, body string) {
-	ts := t.Local().Format(time.Stamp)
+	ts := t.Format(time.Stamp)
 	if body != "" {
 		fmt.Printf("[%s] %s %s\n", ts, status, body)
 	} else {
@@ -34,7 +34,7 @@ func cmdStatus(c *cli.Context) {
 		log.Fatal("error: failed to get status: ", err)
 	}
 	printStatus(s.LastUpdated, s.Status, "")
-	exitWithStatus(s.Status)
+	// exitWithStatus(s.Status)
 }
 
 func cmdMessages(c *cli.Context) {
@@ -53,7 +53,7 @@ func cmdLastMessage(c *cli.Context) {
 		log.Fatal("error: failed to get last message: ", err)
 	}
 	printStatus(m.CreatedOn, m.Status, m.Body)
-	exitWithStatus(m.Status)
+	// exitWithStatus(m.Status)
 }
 
 func main() {
