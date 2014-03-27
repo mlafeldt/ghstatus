@@ -65,9 +65,7 @@ func cmdLastMessage(c *cli.Context) {
 	}
 }
 
-func main() {
-	log.SetFlags(0)
-
+func runApp(args []string) {
 	app := cli.NewApp()
 	app.Name = "ghstatus"
 	app.Usage = "Check the system status of GitHub from the command line"
@@ -102,7 +100,6 @@ func main() {
 		},
 	}
 
-	args := os.Args
 	if len(args) < 2 {
 		args = append(args, "status")
 	}
@@ -110,4 +107,9 @@ func main() {
 	if err := app.Run(args); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func main() {
+	log.SetFlags(0)
+	runApp(os.Args)
 }
