@@ -33,8 +33,12 @@ func cmdStatus(c *cli.Context) {
 	if err != nil {
 		log.Fatal("error: failed to get status: ", err)
 	}
+
 	printStatus(s.LastUpdated, s.Status, "")
-	// exitWithStatus(s.Status)
+
+	if c != nil && c.Bool("exit-code") {
+		exitWithStatus(s.Status)
+	}
 }
 
 func cmdMessages(c *cli.Context) {
@@ -42,6 +46,7 @@ func cmdMessages(c *cli.Context) {
 	if err != nil {
 		log.Fatal("error: failed to get messages: ", err)
 	}
+
 	for _, m := range messages {
 		printStatus(m.CreatedOn, m.Status, m.Body)
 	}
@@ -52,8 +57,12 @@ func cmdLastMessage(c *cli.Context) {
 	if err != nil {
 		log.Fatal("error: failed to get last message: ", err)
 	}
+
 	printStatus(m.CreatedOn, m.Status, m.Body)
-	// exitWithStatus(m.Status)
+
+	if c != nil && c.Bool("exit-code") {
+		exitWithStatus(m.Status)
+	}
 }
 
 func main() {
@@ -68,6 +77,12 @@ func main() {
 			Name:      "status",
 			ShortName: "s",
 			Action:    cmdStatus,
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					"exit-code, e",
+					"Make program exit with GitHub status as exit code",
+				},
+			},
 		},
 		{
 			Name:      "messages",
@@ -78,6 +93,12 @@ func main() {
 			Name:      "last",
 			ShortName: "l",
 			Action:    cmdLastMessage,
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					"exit-code, e",
+					"Make program exit with GitHub status as exit code",
+				},
+			},
 		},
 	}
 
