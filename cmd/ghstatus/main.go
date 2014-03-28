@@ -67,6 +67,17 @@ func cmdLastMessage(c *cli.Context) {
 	}
 }
 
+func cmdDailySummaries(c *cli.Context) {
+	summaries, err := ghstatus.GetDailySummaries()
+	if err != nil {
+		log.Fatal("error: failed to get daily summaries: ", err)
+	}
+
+	for date, s := range summaries {
+		fmt.Printf("%s %f %f %f\n", date, s.Good, s.Minor, s.Major)
+	}
+}
+
 func runApp(args []string) {
 	app := cli.NewApp()
 	app.Name = "ghstatus"
@@ -102,6 +113,12 @@ func runApp(args []string) {
 					"Make program exit with GitHub status as exit code",
 				},
 			},
+		},
+		{
+			Name:      "daily",
+			ShortName: "d",
+			Usage:     "Show daily summaries",
+			Action:    cmdDailySummaries,
 		},
 	}
 
