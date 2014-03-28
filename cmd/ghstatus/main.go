@@ -74,6 +74,7 @@ func runApp(args []string) {
 		{
 			Name:      "status",
 			ShortName: "s",
+			Usage:     "Show current system status (default command)",
 			Action:    cmdStatus,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
@@ -85,11 +86,13 @@ func runApp(args []string) {
 		{
 			Name:      "messages",
 			ShortName: "m",
+			Usage:     "Show recent human communications",
 			Action:    cmdMessages,
 		},
 		{
 			Name:      "last",
 			ShortName: "l",
+			Usage:     "Show last human communication",
 			Action:    cmdLastMessage,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
