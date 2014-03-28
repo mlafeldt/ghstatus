@@ -1,3 +1,8 @@
+## v1.6 (Mar 28 2014)
+
+* Add `ghstatus` command-line tool.
+* Add `script/build` script for easy cross-compilation.
+
 ## v1.5 (Mar 24 2014)
 
 * Use real on-disk test data dumped from status.github.com instead of minimal

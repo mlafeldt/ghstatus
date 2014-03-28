@@ -71,7 +71,7 @@ func runApp(args []string) {
 	app := cli.NewApp()
 	app.Name = "ghstatus"
 	app.Usage = "Check the system status of GitHub from the command line"
-	app.Version = "1.5"
+	app.Version = "1.6"
 	app.Commands = []cli.Command{
 		{
 			Name:      "status",
