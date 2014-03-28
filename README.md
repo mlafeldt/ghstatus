@@ -2,21 +2,58 @@ go-ghstatus
 ===========
 
 This Go library allows you to check the system status of GitHub from your own
-applications.
+applications. The status information is retrieved from GitHub's [system status
+API].
 
-The status information is retrieved from GitHub's [system status API].
+The project also comes with a simple command-line tool named `ghstatus` that
+utilizes the Go library.
 
 ## Installation
 
 First, make sure you have [Go] installed.
 
-To download and install go-ghstatus from source, simply run:
+### Library
+
+To download and install the go-ghstatus library from source, simply run:
 
     $ go get github.com/mlafeldt/go-ghstatus
 
+### Client
+
+To install the `ghstatus` command-line tool, run this:
+
+    $ go get github.com/mlafeldt/go-ghstatus/cmd/ghstatus
+
 ## Usage
 
+### Library
+
 For usage and examples, see the [Godoc] for this package.
+
+### Client
+
+To learn how to use the `ghstatus` tool, run `ghstatus --help`. The output will
+look like this:
+
+```
+NAME:
+   ghstatus - Check the system status of GitHub from the command line
+
+USAGE:
+   ghstatus [global options] command [command options] [arguments...]
+
+COMMANDS:
+   status, s	Show current system status (default command)
+   messages, m	Show recent human communications
+   last, l	Show last human communication
+   help, h	Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --version, -v	print the version
+   --help, -h		show help
+```
+
+To find out more about a specific command, execute `ghstatus help <command>`.
 
 ## Testing
 
