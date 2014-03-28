@@ -70,3 +70,12 @@ func TestGetLastMessage(t *testing.T) {
 		assert.False(t, m.CreatedOn.IsZero())
 	}
 }
+
+func TestGetDailySummary(t *testing.T) {
+	summary, err := GetDailySummary("2014-03-22")
+	if assert.NoError(t, err) {
+		assert.Equal(t, 77373.0, summary.Good)
+		assert.Equal(t, 9027.0, summary.Minor)
+		assert.Equal(t, 0, summary.Major)
+	}
+}
