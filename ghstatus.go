@@ -77,13 +77,21 @@ func GetLastMessage() (*Message, error) {
 	return message, nil
 }
 
-func GetDailySummary(date string) (*DailySummary, error) {
-	var a map[string]DailySummary
-	if err := sendRequest("/api/daily-summary.json", &a); err != nil {
+func GetDailySummaries() (map[string]DailySummary, error) {
+	var summaries map[string]DailySummary
+	if err := sendRequest("/api/daily-summary.json", &summaries); err != nil {
 		return nil, err
 	}
-	summary := a[date]
-	return &summary, nil
+	return summaries, nil
+}
+
+func GetDailySummary(date string) (*DailySummary, error) {
+	summaries, err := GetDailySummaries()
+	if err != nil {
+		return nil, err
+	}
+	s := summaries[date]
+	return &s, nil
 }
 
 func sendRequest(endpoint string, v interface{}) error {

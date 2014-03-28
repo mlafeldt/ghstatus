@@ -71,6 +71,17 @@ func TestGetLastMessage(t *testing.T) {
 	}
 }
 
+func TestGetDailySummaries(t *testing.T) {
+	summaries, err := GetDailySummaries()
+	if assert.NoError(t, err) {
+		assert.NotEmpty(t, summaries)
+		s := summaries["2010-02-09"]
+		assert.Equal(t, 25200.0, s.Good)
+		assert.Equal(t, 61200.0, s.Minor)
+		assert.Equal(t, 0, s.Major)
+	}
+}
+
 func TestGetDailySummary(t *testing.T) {
 	summary, err := GetDailySummary("2014-03-22")
 	if assert.NoError(t, err) {
