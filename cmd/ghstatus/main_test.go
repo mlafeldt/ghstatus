@@ -1,3 +1,5 @@
+// These smoke tests start an internal web server that returns fake responses
+// in order to check the output of the different ghstatus commands.
 package main
 
 import (

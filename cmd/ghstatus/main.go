@@ -1,3 +1,5 @@
+// With the ghstatus tool, you can check the system status of GitHub from the
+// command line.
 package main
 
 import (
