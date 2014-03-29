@@ -4,9 +4,11 @@ go:
   - 1.2
   - tip
 
+install: script/bootstrap
+
 script:
-  - ./script/test
-  - REALHTTP=1 ./script/test
+  - script/test
+  - REALHTTP=1 script/test
 
 branches:
   only:

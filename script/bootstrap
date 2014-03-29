@@ -2,5 +2,5 @@
 
 set -e
 
-go get -t ./...
-go get code.google.com/p/go.tools/cmd/cover
+go get -v -t ./...
+go get -v code.google.com/p/go.tools/cmd/cover
