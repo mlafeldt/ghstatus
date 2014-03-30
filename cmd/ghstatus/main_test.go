@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/mlafeldt/go-ghstatus"
 	"net/http/httptest"
+
+	ghstatus "github.com/mlafeldt/go-ghstatus"
 )
 
 func init() {

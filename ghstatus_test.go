@@ -1,23 +1,24 @@
 // These tests for the ghstatus package start an internal web server that
 // returns fake responses. To talk to the real service, set the environment
 // variable REALHTTP.
-package ghstatus
+package ghstatus_test
 
 import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
-
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
+	"os"
 	"testing"
+
+	ghstatus "github.com/mlafeldt/go-ghstatus"
+	"github.com/stretchr/testify/assert"
 )
 
 func init() {
 	if os.Getenv("REALHTTP") == "" {
 		ts := httptest.NewServer(http.HandlerFunc(serveTestResponses))
-		SetServiceURL(ts.URL)
+		ghstatus.SetServiceURL(ts.URL)
 	}
 }
 
@@ -36,14 +37,14 @@ func serveTestResponses(w http.ResponseWriter, r *http.Request) {
 
 func checkStatus(s string) bool {
 	switch s {
-	case Good, Minor, Major:
+	case ghstatus.Good, ghstatus.Minor, ghstatus.Major:
 		return true
 	}
 	return false
 }
 
 func TestGetStatus(t *testing.T) {
-	status, err := GetStatus()
+	status, err := ghstatus.GetStatus()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(status.Status))
 		assert.False(t, status.LastUpdated.IsZero())
@@ -51,7 +52,7 @@ func TestGetStatus(t *testing.T) {
 }
 
 func TestGetMessages(t *testing.T) {
-	messages, err := GetMessages()
+	messages, err := ghstatus.GetMessages()
 	if assert.NoError(t, err) {
 		assert.NotEmpty(t, messages)
 		for _, m := range messages {
@@ -63,7 +64,7 @@ func TestGetMessages(t *testing.T) {
 }
 
 func TestGetLastMessage(t *testing.T) {
-	m, err := GetLastMessage()
+	m, err := ghstatus.GetLastMessage()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(m.Status))
 		assert.NotEmpty(t, m.Body)
