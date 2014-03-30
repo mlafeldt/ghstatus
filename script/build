@@ -3,4 +3,8 @@
 set -e
 
 script/bootstrap
-gox -output="build/ghstatus_{{.OS}}_{{.Arch}}" -os="darwin linux windows" ./...
+
+gox \
+    -output="build/ghstatus_{{.OS}}_{{.Arch}}" \
+    -os="darwin linux windows" \
+    ./...

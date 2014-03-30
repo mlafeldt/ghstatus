@@ -2,7 +2,6 @@
 
 set -e
 
-: ${GOTESTFLAGS:="-v -cover"}
-
 script/bootstrap
-go test $GOTESTFLAGS ./...
+
+go test -v -cover ./...
