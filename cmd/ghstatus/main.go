@@ -72,43 +72,33 @@ func runApp(args []string) {
 	app.Name = "ghstatus"
 	app.Usage = "Check the system status of GitHub from the command line"
 	app.Version = "1.6"
-	app.Commands = []cli.Command{
-		{
-			Name:      "status",
-			ShortName: "s",
-			Usage:     "Show current system status (default command)",
-			Action:    cmdStatus,
-			Flags: []cli.Flag{
-				cli.BoolFlag{
-					"exit-code, e",
-					"Make program exit with GitHub status as exit code",
-				},
-			},
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			"status, s",
+			"Show current system status (default action)",
 		},
-		{
-			Name:      "messages",
-			ShortName: "m",
-			Usage:     "Show recent human communications",
-			Action:    cmdMessages,
+		cli.BoolFlag{
+			"messages, m",
+			"Show recent human communications",
 		},
-		{
-			Name:      "last",
-			ShortName: "l",
-			Usage:     "Show last human communication",
-			Action:    cmdLastMessage,
-			Flags: []cli.Flag{
-				cli.BoolFlag{
-					"exit-code, e",
-					"Make program exit with GitHub status as exit code",
-				},
-			},
+		cli.BoolFlag{
+			"last, l",
+			"Show last human communication",
+		},
+		cli.BoolFlag{
+			"exit-code, e",
+			"Make program exit with GitHub status as exit code",
 		},
 	}
-
-	if len(args) < 2 {
-		args = append(args, "status")
+	app.Action = func(c *cli.Context) {
+		if c.Bool("messages") {
+			cmdMessages(c)
+		} else if c.Bool("last") {
+			cmdLastMessage(c)
+		} else {
+			cmdStatus(c)
+		}
 	}
-
 	if err := app.Run(args); err != nil {
 		log.Fatal(err)
 	}
