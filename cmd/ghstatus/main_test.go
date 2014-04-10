@@ -28,13 +28,13 @@ func init() {
 }
 
 func ExampleStatus() {
-	runApp([]string{"ghstatus", "--status"})
+	runApp([]string{"ghstatus", "-s"})
 	// Output:
 	// [Mar 23 19:43:34] good
 }
 
 func ExampleMessages() {
-	runApp([]string{"ghstatus", "--messages"})
+	runApp([]string{"ghstatus", "-m"})
 	// Output:
 	// [Mar 22 03:35:14] good Everything operating normally.
 	// [Mar 22 01:04:47] minor As a result of our ongoing DDoS mitigation, we're experiencing high rates of packet loss from users in the Asia-Pacific region. We're working on reducing this disruption to service and will provide additional information when it becomes available.
@@ -45,7 +45,7 @@ func ExampleMessages() {
 }
 
 func ExampleLastMessage() {
-	runApp([]string{"ghstatus", "--last"})
+	runApp([]string{"ghstatus", "-l"})
 	// Output:
 	// [Mar 22 03:35:14] good Everything operating normally.
 }
