@@ -4,8 +4,6 @@
 package ghstatus_test
 
 import (
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -17,22 +15,9 @@ import (
 
 func init() {
 	if os.Getenv("REALHTTP") == "" {
-		ts := httptest.NewServer(http.HandlerFunc(serveTestResponses))
+		ts := httptest.NewServer(http.FileServer(http.Dir("testdata")))
 		ghstatus.SetServiceURL(ts.URL)
 	}
-}
-
-func serveTestResponses(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "method must be GET", http.StatusMethodNotAllowed)
-		return
-	}
-	content, err := ioutil.ReadFile("testdata" + r.URL.Path)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	fmt.Fprint(w, string(content))
 }
 
 func checkStatus(s string) bool {

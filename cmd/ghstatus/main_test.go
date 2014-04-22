@@ -3,8 +3,6 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 
@@ -12,18 +10,7 @@ import (
 )
 
 func init() {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != "GET" {
-			http.Error(w, "method must be GET", http.StatusMethodNotAllowed)
-			return
-		}
-		content, err := ioutil.ReadFile("../../testdata" + r.URL.Path)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		fmt.Fprint(w, string(content))
-	}))
+	ts := httptest.NewServer(http.FileServer(http.Dir("../../testdata")))
 	ghstatus.SetServiceURL(ts.URL)
 }
 
