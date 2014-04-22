@@ -39,7 +39,6 @@ func TestGetStatus(t *testing.T) {
 func TestGetMessages(t *testing.T) {
 	messages, err := ghstatus.GetMessages()
 	if assert.NoError(t, err) {
-		assert.NotEmpty(t, messages)
 		for _, m := range messages {
 			assert.True(t, checkStatus(m.Status))
 			assert.NotEmpty(t, m.Body)
