@@ -34,6 +34,12 @@ type Message struct {
 	CreatedOn time.Time `json:"created_on"`
 }
 
+type DailySummary struct {
+	Good  float64 `json:"good"`
+	Minor float64 `json:"minor"`
+	Major float64 `json:"major"`
+}
+
 // Get current URL for system status API.
 func ServiceURL() string {
 	return serviceURL
@@ -69,6 +75,23 @@ func GetLastMessage() (*Message, error) {
 		return nil, err
 	}
 	return message, nil
+}
+
+func GetDailySummaries() (map[string]DailySummary, error) {
+	var summaries map[string]DailySummary
+	if err := sendRequest("/api/daily-summary.json", &summaries); err != nil {
+		return nil, err
+	}
+	return summaries, nil
+}
+
+func GetDailySummary(date string) (*DailySummary, error) {
+	summaries, err := GetDailySummaries()
+	if err != nil {
+		return nil, err
+	}
+	s := summaries[date]
+	return &s, nil
 }
 
 func sendRequest(endpoint string, v interface{}) error {
