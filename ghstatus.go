@@ -4,15 +4,8 @@
 package ghstatus
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"net/http"
 	"time"
 )
-
-// The URL of GitHub's system status API.
-var serviceURL = "https://status.github.com"
 
 // Possible status values set in Status and Message.
 const (
@@ -36,56 +29,52 @@ type Message struct {
 
 // Get current URL for system status API.
 func ServiceURL() string {
-	return serviceURL
+	return DefaultClient.ServiceURL
 }
 
 // Set new URL for system status API.
 func SetServiceURL(url string) {
-	serviceURL = url
+	DefaultClient.ServiceURL = url
 }
 
 // Get current system status and timestamp.
-func GetStatus() (*Status, error) {
+func (c *Client) GetStatus() (*Status, error) {
 	var status *Status
-	if err := sendRequest("/api/status.json", &status); err != nil {
+	if err := c.sendRequest("/api/status.json", &status); err != nil {
 		return nil, err
 	}
 	return status, nil
 }
 
+// GetStatus is a wrapper around DefaultClient.GetStatus
+func GetStatus() (*Status, error) {
+	return DefaultClient.GetStatus()
+}
+
 // Get most recent human communications with status and timestamp.
-func GetMessages() ([]Message, error) {
+func (c *Client) GetMessages() ([]Message, error) {
 	var messages []Message
-	if err := sendRequest("/api/messages.json", &messages); err != nil {
+	if err := c.sendRequest("/api/messages.json", &messages); err != nil {
 		return nil, err
 	}
 	return messages, nil
 }
 
+// GetMessages is a wrapper around DefaultClient.GetMessages
+func GetMessages() ([]Message, error) {
+	return DefaultClient.GetMessages()
+}
+
 // Get last human communication, status, and timestamp.
-func GetLastMessage() (*Message, error) {
+func (c *Client) GetLastMessage() (*Message, error) {
 	var message *Message
-	if err := sendRequest("/api/last-message.json", &message); err != nil {
+	if err := c.sendRequest("/api/last-message.json", &message); err != nil {
 		return nil, err
 	}
 	return message, nil
 }
 
-func sendRequest(endpoint string, v interface{}) error {
-	resp, err := http.Get(serviceURL + endpoint)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("HTTP error: %s", resp.Status)
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, v)
+// GetLastMessage is a wrapper around DefaultClient.GetLastMessage
+func GetLastMessage() (*Message, error) {
+	return DefaultClient.GetLastMessage()
 }
