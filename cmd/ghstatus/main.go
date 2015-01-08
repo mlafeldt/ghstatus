@@ -82,6 +82,7 @@ func runApp(args []string) {
 				cli.BoolFlag{
 					"exit-code, e",
 					"Make program exit with GitHub status as exit code",
+					"",
 				},
 			},
 		},
@@ -100,6 +101,7 @@ func runApp(args []string) {
 				cli.BoolFlag{
 					"exit-code, e",
 					"Make program exit with GitHub status as exit code",
+					"",
 				},
 			},
 		},

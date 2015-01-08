@@ -1,8 +1,6 @@
 language: go
 
-go:
-  - 1.2
-  - tip
+go: 1.4
 
 install: script/bootstrap
 
