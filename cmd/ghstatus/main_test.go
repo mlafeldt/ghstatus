@@ -11,7 +11,7 @@ import (
 
 func init() {
 	ts := httptest.NewServer(http.FileServer(http.Dir("../../testdata")))
-	ghstatus.SetServiceURL(ts.URL)
+	client = &ghstatus.Client{ServiceURL: ts.URL}
 }
 
 func ExampleStatus() {

@@ -13,10 +13,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var client = ghstatus.DefaultClient
+
 func init() {
 	if os.Getenv("REALHTTP") == "" {
 		ts := httptest.NewServer(http.FileServer(http.Dir("testdata")))
-		ghstatus.SetServiceURL(ts.URL)
+		client = &ghstatus.Client{ServiceURL: ts.URL}
 	}
 }
 
@@ -29,7 +31,7 @@ func checkStatus(s string) bool {
 }
 
 func TestGetStatus(t *testing.T) {
-	status, err := ghstatus.GetStatus()
+	status, err := client.GetStatus()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(status.Status))
 		assert.False(t, status.LastUpdated.IsZero())
@@ -37,7 +39,7 @@ func TestGetStatus(t *testing.T) {
 }
 
 func TestGetMessages(t *testing.T) {
-	messages, err := ghstatus.GetMessages()
+	messages, err := client.GetMessages()
 	if assert.NoError(t, err) {
 		for _, m := range messages {
 			assert.True(t, checkStatus(m.Status))
@@ -48,7 +50,7 @@ func TestGetMessages(t *testing.T) {
 }
 
 func TestGetLastMessage(t *testing.T) {
-	m, err := ghstatus.GetLastMessage()
+	m, err := client.GetLastMessage()
 	if assert.NoError(t, err) {
 		assert.True(t, checkStatus(m.Status))
 		assert.NotEmpty(t, m.Body)

@@ -12,6 +12,8 @@ import (
 	"github.com/mlafeldt/ghstatus"
 )
 
+var client = ghstatus.DefaultClient
+
 func printStatus(t time.Time, status, body string) {
 	ts := t.Format(time.Stamp)
 	if body != "" {
@@ -31,7 +33,7 @@ func exitWithStatus(status string) {
 }
 
 func cmdStatus(c *cli.Context) {
-	s, err := ghstatus.GetStatus()
+	s, err := client.GetStatus()
 	if err != nil {
 		log.Fatal("error: failed to get status: ", err)
 	}
@@ -44,7 +46,7 @@ func cmdStatus(c *cli.Context) {
 }
 
 func cmdMessages(c *cli.Context) {
-	messages, err := ghstatus.GetMessages()
+	messages, err := client.GetMessages()
 	if err != nil {
 		log.Fatal("error: failed to get messages: ", err)
 	}
@@ -55,7 +57,7 @@ func cmdMessages(c *cli.Context) {
 }
 
 func cmdLastMessage(c *cli.Context) {
-	m, err := ghstatus.GetLastMessage()
+	m, err := client.GetLastMessage()
 	if err != nil {
 		log.Fatal("error: failed to get last message: ", err)
 	}
