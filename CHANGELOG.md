@@ -1,3 +1,12 @@
+## v1.7 (Dec 29 2015)
+
+* Rename project to ghstatus.
+* Introduce `Client` type that allows to configure a custom `http.Client` and
+  service URL.
+* Set lower HTTP timeout in CLI tool.
+* Use `http.FileServer` for testing rather than re-implementing it.
+* Replace scripts with `Makefile`.
+
 ## v1.6 (Mar 28 2014)
 
 * Add `ghstatus` command-line tool.
