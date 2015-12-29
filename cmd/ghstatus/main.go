@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/codegangsta/cli"
-	"github.com/mlafeldt/go-ghstatus"
+	"github.com/mlafeldt/ghstatus"
 )
 
 func printStatus(t time.Time, status, body string) {

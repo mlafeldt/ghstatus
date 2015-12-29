@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	ghstatus "github.com/mlafeldt/go-ghstatus"
+	"github.com/mlafeldt/ghstatus"
 )
 
 func init() {

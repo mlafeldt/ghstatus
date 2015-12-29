@@ -9,7 +9,7 @@ import (
 	"os"
 	"testing"
 
-	ghstatus "github.com/mlafeldt/go-ghstatus"
+	"github.com/mlafeldt/ghstatus"
 	"github.com/stretchr/testify/assert"
 )
 
