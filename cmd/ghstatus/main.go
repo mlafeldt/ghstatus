@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"time"
 
@@ -12,7 +13,9 @@ import (
 	"github.com/mlafeldt/ghstatus"
 )
 
-var client = ghstatus.DefaultClient
+var client = &ghstatus.Client{
+	HTTPClient: &http.Client{Timeout: 10 * time.Second},
+}
 
 func printStatus(t time.Time, status, body string) {
 	ts := t.Format(time.Stamp)
