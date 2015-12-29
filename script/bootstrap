@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -e
-
-go get -v -t ./...
-go get -v golang.org/x/tools/cmd/cover

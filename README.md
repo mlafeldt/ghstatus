@@ -61,7 +61,7 @@ To find out more about a specific command, execute `ghstatus help <command>`.
 You can run the tests this way:
 
     $ cd ghstatus/
-    $ ./script/test
+    $ make test
 
 ## License and Author
 

@@ -1,12 +1,14 @@
 language: go
 
-go: 1.4
+sudo: false
 
-install: script/bootstrap
+go: 1.5
+
+install: make bootstrap
 
 script:
-  - script/test
-  - REALHTTP=1 script/test
+  - make test
+  - make test REALHTTP=1
 
 branches:
   only:
