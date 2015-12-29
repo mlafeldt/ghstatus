@@ -6,7 +6,6 @@ package ghstatus
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"time"
 )
@@ -91,10 +90,5 @@ func (c *Client) sendRequest(endpoint string, v interface{}) error {
 		return fmt.Errorf("HTTP error: %s", resp.Status)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, v)
+	return json.NewDecoder(resp.Body).Decode(v)
 }
