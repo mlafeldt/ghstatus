@@ -80,9 +80,8 @@ func runApp(args []string) {
 			Action:    cmdStatus,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
-					"exit-code, e",
-					"Make program exit with GitHub status as exit code",
-					"",
+					Name:  "exit-code, e",
+					Usage: "Make program exit with GitHub status as exit code",
 				},
 			},
 		},
@@ -99,9 +98,8 @@ func runApp(args []string) {
 			Action:    cmdLastMessage,
 			Flags: []cli.Flag{
 				cli.BoolFlag{
-					"exit-code, e",
-					"Make program exit with GitHub status as exit code",
-					"",
+					Name:  "exit-code, e",
+					Usage: "Make program exit with GitHub status as exit code",
 				},
 			},
 		},
