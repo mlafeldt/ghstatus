@@ -1,5 +1,8 @@
 # ghstatus
 
+[![Build Status](https://travis-ci.org/mlafeldt/ghstatus.svg?branch=master)](https://travis-ci.org/mlafeldt/ghstatus)
+[![GoDoc](https://godoc.org/github.com/mlafeldt/ghstatus?status.svg)](https://godoc.org/github.com/mlafeldt/ghstatus)
+
 This Go library allows you to check the system status of GitHub from your own
 applications and monitoring services. The status information is retrieved from
 GitHub's [system status API].
@@ -56,24 +59,19 @@ To find out more about a specific command, execute `ghstatus help <command>`.
 
 ## Testing
 
-[![Build Status](https://travis-ci.org/mlafeldt/ghstatus.svg?branch=master)](https://travis-ci.org/mlafeldt/ghstatus)
-
 You can run the tests this way:
 
     $ cd ghstatus/
     $ make test
 
-## License and Author
+## License
 
-Author:: Mathias Lafeldt (<mathias.lafeldt@gmail.com>)
-
-Copyright:: 2013-2014, Mathias Lafeldt
-
-ghstatus is licensed under the terms of the MIT License. See `LICENSE` file.
+ghstatus is licensed under the terms of the MIT License. See [LICENSE](/LICENSE)
+file.
 
 ## Contributing
 
-Please see `CONTRIBUTING.md` for details.
+Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for details.
 
 
 [Go]: http://golang.org/doc/install
